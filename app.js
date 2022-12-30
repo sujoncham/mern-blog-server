@@ -28,7 +28,7 @@ mongoose.connect(DB,{
 }).then(()=>console.log("DATABASE connected")).catch((err)=> console.log("error" + err.message))
 
 app.get('/', (req, res)=>{
-    console.log(`server start at port no ${port}`)
+    res.send(`server start at port no ${port}`)
 })
 app.listen(port,()=>{
     console.log(`server start at port no ${port}`)
