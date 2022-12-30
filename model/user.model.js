@@ -20,6 +20,11 @@ const userSchema = new mongoose.Schema({
         ref: 'blog',
         required: true,
     }],
+    comments:[{
+        type: mongoose.Types.ObjectId,
+        ref: 'comment',
+        required: true,
+    }],
 })
 
 const User = mongoose.model('user', userSchema);
