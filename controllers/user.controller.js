@@ -111,5 +111,39 @@ export const login = async(req, res, next)=>{
         error: error.message,
     })
    }
-
 }
+
+export const profileUpdate = async(req, res, next)=>{
+    console.log(req.body)
+    try {
+        const {username, email, description, address, phone, hobby, vision} = req.body;
+        const userId = req.params.id;
+        const user = await User.findByIdAndUpdate(userId, {
+            username, email, description, address, phone, hobby, vision 
+        });
+
+        return res.status(200).json({
+            status: "success",
+            message: "update user by id successfully",
+            data: user,
+        })
+    } catch (error) {
+        console.log(error)
+    }
+};
+
+export const getProfileById = async(req, res, next)=>{
+    
+    try {
+        const userId = req.params.id;
+        const user = await User.findById(userId);
+
+         return res.status(200).json({
+            status: "success",
+            message: "get user by id successfully",
+            user: user,
+        })
+    } catch (error) {
+        console.log(error)
+    }
+};

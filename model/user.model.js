@@ -25,6 +25,26 @@ const userSchema = new mongoose.Schema({
         ref: 'comment',
         required: true,
     }],
+    description: {
+        type: String,
+        default: "",
+    },
+    address: {
+        type: String,
+        default: "",
+    },
+    phone: {
+        type: String,
+        default: "",
+    },
+    hobby: {
+        type: String,
+        default: "",
+    },
+    vision: {
+        type: String,
+        default: "",
+    },
 })
 
 const User = mongoose.model('user', userSchema);

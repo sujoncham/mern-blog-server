@@ -87,6 +87,8 @@ export const updateBlog = async(req, res, next)=>{
         console.log(error)
     }
 };
+
+
 export const getByIdBlog = async(req, res, next)=>{
     
     try {
@@ -102,6 +104,7 @@ export const getByIdBlog = async(req, res, next)=>{
         console.log(error)
     }
 };
+
 export const getByUserIdBlog = async(req, res, next)=>{
     
     try {
