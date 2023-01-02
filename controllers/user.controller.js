@@ -1,7 +1,16 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import path from 'path';
+
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
+
+
 import User from '../model/user.model.js';
 const saltRounds = 10;
+
 
 export const getAllUsers = async(req, res, next)=>{
     let users;
@@ -130,6 +139,32 @@ export const profileUpdate = async(req, res, next)=>{
     } catch (error) {
         console.log(error)
     }
+};
+export const profileImgUpdate = async(req, res, next)=>{
+    console.log(req.files)
+    
+    try {
+        const bannerImg = req.files.bannerImg[0].filename;
+        const profileImg = req.files.profileImg[0].filename;
+        console.log(bannerImg, profileImg)
+        const userId = req.params.id;
+        const userImg = await User.findByIdAndUpdate(userId, {
+            bannerImg, profileImg, 
+        });
+
+        return res.status(200).json({
+            status: "success",
+            message: "update image by id successfully",
+            data: userImg,
+        })
+    } catch (error) {
+        console.log(error)
+    }
+};
+
+export const profileImgId = async(req, res)=>{
+    const { img } = req.params;
+    return res.sendFile(path.join(__dirname, `./uploads/${img}`));
 };
 
 export const getProfileById = async(req, res, next)=>{

@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
 
-const commentSchema = new mongoose.Schema({
-    comment:{
+const categorySchema = new mongoose.Schema({
+    category:{
         type: String,
+        required: true,
     },
     user: {
         type: mongoose.Types.ObjectId,
@@ -14,11 +15,7 @@ const commentSchema = new mongoose.Schema({
         ref: "blog",
         required: true,
     },
-    commentDate: {
-        type: Date,
-        default: Date.now,
-    }
 })
 
-const Comment = mongoose.model('comment', commentSchema);
-export default Comment;
+const Category = mongoose.model('category', categorySchema);
+export default Category;

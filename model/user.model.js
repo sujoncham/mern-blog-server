@@ -45,6 +45,14 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: "",
     },
+    bannerImg: {
+        type: String,
+        default: "",
+    },
+    profileImg: {
+        type: String,
+        default: "",
+    },
 })
 
 const User = mongoose.model('user', userSchema);

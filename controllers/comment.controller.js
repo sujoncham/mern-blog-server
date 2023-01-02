@@ -28,10 +28,10 @@ export const getAllComments = async(req, res, next)=>{
 
 export const createComment = async(req, res, next)=>{
     console.log(req.body)
-    const {comment, username} = req.body;
+    const {comment, user} = req.body;
     let existUser;
     try {
-        existUser = await User.findById(username).populate('blogs').populate('comments');
+        existUser = await User.findById(user).populate('blogs');
     } catch (error) {
         return console.log(error.message)
     }
@@ -40,13 +40,16 @@ export const createComment = async(req, res, next)=>{
     }
     const newComment = new Comment({
         comment,
-        username,
+        user,
     }); 
 
     try {
-     
         await newComment.save();
-        existUser.comments.push(newComment);
+        return res.status(200).json({
+            status: "success",
+            message: "comment created successfully",
+            data: newComment,
+        })
     } catch (error) {
         return res.send({
             status: "failed",
@@ -55,11 +58,7 @@ export const createComment = async(req, res, next)=>{
         });
 
     }
-        return res.status(200).json({
-        status: "success",
-        message: "comment created successfully",
-        data: newComment,
-    })
+        
  }
 
  export const getByIdComment = async(req, res, next)=>{

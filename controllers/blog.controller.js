@@ -27,11 +27,16 @@ export const getAllBlogs = async(req, res, next)=>{
 };
 
 export const createBlog = async(req, res, next)=>{
-    // console.log(req.body)
-    const {title, description, image, user} = req.body;
+    console.log(req.body)
+    const {title, description, image, category, user} = req.body;
     let existUser;
     try {
-        existUser = await User.findById(user).populate('blogs');
+        existUser = await User.findById(user).populate({
+            path: "blogs", // populate blogs
+            populate: {
+               path: "comments" // in blogs, populate comments
+            }
+         });
     } catch (error) {
         return console.log(error)
     }
@@ -42,6 +47,7 @@ export const createBlog = async(req, res, next)=>{
         title,
         description,
         image,
+        category,
         user,
     }); 
 
