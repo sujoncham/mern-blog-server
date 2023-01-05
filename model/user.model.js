@@ -20,11 +20,6 @@ const userSchema = new mongoose.Schema({
         ref: 'blog',
         required: true,
     }],
-    comments:[{
-        type: mongoose.Types.ObjectId,
-        ref: 'comment',
-        required: true,
-    }],
     description: {
         type: String,
         default: "",
@@ -53,7 +48,21 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: "",
     },
-})
+    followers: {
+        type: Array,
+        default: [],
+      },
+      followings: {
+        type: Array,
+        default: [],
+      },
+      isAdmin: {
+        type: Boolean,
+        default: false,
+      },
+},{ 
+    timestamps: true
+ })
 
 const User = mongoose.model('user', userSchema);
 export default User;

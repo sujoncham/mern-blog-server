@@ -1,6 +1,6 @@
 import express from "express";
 import multer from 'multer';
-import { getAllUsers, getProfileById, login, profileImgId, profileImgUpdate, profileUpdate, signup } from "../controllers/user.controller.js";
+import { follow, getAllUsers, getProfileById, login, profileImgId, profileImgUpdate, profileUpdate, signup, unfollow } from "../controllers/user.controller.js";
 
 const routerUser = express.Router();
 
@@ -36,6 +36,8 @@ routerUser.patch('/profileUpdate/:id', profileUpdate);
 routerUser.patch('/profileImgUpdate/:id', cpUpload, profileImgUpdate);
 routerUser.get('/profileImgId/:img', profileImgId);
 routerUser.get('/profile/:id', getProfileById);
+routerUser.put('/profile/:id/follow', follow);
+routerUser.put('/profile/:id/unfollow', unfollow);
 
 
 export default routerUser;

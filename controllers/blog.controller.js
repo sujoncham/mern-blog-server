@@ -28,15 +28,10 @@ export const getAllBlogs = async(req, res, next)=>{
 
 export const createBlog = async(req, res, next)=>{
     console.log(req.body)
-    const {title, description, image, category, user} = req.body;
+    const {title, description, image, user} = req.body;
     let existUser;
     try {
-        existUser = await User.findById(user).populate({
-            path: "blogs", // populate blogs
-            populate: {
-               path: "comments" // in blogs, populate comments
-            }
-         });
+        existUser = await User.findById(user).populate('blogs');
     } catch (error) {
         return console.log(error)
     }
@@ -47,7 +42,6 @@ export const createBlog = async(req, res, next)=>{
         title,
         description,
         image,
-        category,
         user,
     }); 
 
@@ -151,3 +145,35 @@ export const deleteBlog = async(req, res, next)=>{
     }
 
 };
+
+//like / dislike a post
+
+export const likeBlog = async(req, res, next)=>{
+    console.log(req.body)
+    try {
+      const post = await Blog.findById(req.params.id);
+      if (!post.likes.includes(req.body.user)) {
+        await post.updateOne({ $push: { likes: req.body.user } });
+        res.status(200).json("The post has been liked");
+      } else {
+        await post.updateOne({ $pull: { likes: req.body.user } });
+        res.status(200).json("The post has been disliked");
+      }
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  };
+
+  
+  
+export const commentBlog = async(req, res, next)=>{
+    // console.log(req.body)
+    try {
+      const post = await Blog.findById(req.params.id);
+            await post.updateOne({$push:{comments:{ comments:req.body.comments, date: new Date()}}});
+        
+        res.status(200).json("The post has been commented");  
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  };

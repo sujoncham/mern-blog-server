@@ -14,20 +14,24 @@ const blogSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    category:{
-        type:String,
-        required:true
-    },
+    // category:{
+    //     type:String,
+    //     required:true
+    // },
     user:{
         type: mongoose.Types.ObjectId,
         ref: 'user',
         required: true,
     },
-    comments:[{
-        type: mongoose.Types.ObjectId,
-        ref: 'comment',
-        required: true,
-    }],
+    
+    comments:{
+        type: Array,
+        default: [],
+    },
+    likes: {
+        type: Array,
+        default: [],
+      },
     date:{
         type:Date,
         default: Date.now,
