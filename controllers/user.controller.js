@@ -141,7 +141,7 @@ export const profileUpdate = async(req, res, next)=>{
     }
 };
 export const profileImgUpdate = async(req, res, next)=>{
-    console.log(req.files)
+    // console.log(req.files)
     
     try {
         const bannerImg = req.files.bannerImg[0].filename;
@@ -171,7 +171,7 @@ export const getProfileById = async(req, res, next)=>{
     
     try {
         const userId = req.params.id;
-        const user = await User.findById(userId);
+        const user = await User.findById(userId).populate('blogs');
 
          return res.status(200).json({
             status: "success",
@@ -186,7 +186,8 @@ export const getProfileById = async(req, res, next)=>{
 //follow a user
 
 export const follow = async(req, res, next)=>{
-    if (req.body.userId !== req.params.id) {
+    // console.log(req.body)
+    if (req.body.userId === req.params.id) {
       try {
         const user = await User.findById(req.params.id);
         const currentUser = await User.findById(req.body.userId);
@@ -207,8 +208,8 @@ export const follow = async(req, res, next)=>{
   
   //unfollow a user
   
-export const unfollow = async(req, res, next)=>{
-      if (req.body.userId !== req.params.id) {
+export const unFollow = async(req, res, next)=>{
+      if (req.body.userId === req.params.id) {
         try {
           const user = await User.findById(req.params.id);
           const currentUser = await User.findById(req.body.userId);

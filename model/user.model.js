@@ -52,14 +52,14 @@ const userSchema = new mongoose.Schema({
         type: Array,
         default: [],
       },
-      followings: {
+    followings: {
         type: Array,
         default: [],
-      },
-      isAdmin: {
+    },
+    isAdmin: {
         type: Boolean,
         default: false,
-      },
+    },
 },{ 
     timestamps: true
  })
