@@ -27,7 +27,7 @@ export const getAllBlogs = async(req, res, next)=>{
 };
 
 export const createBlog = async(req, res, next)=>{
-    console.log(req.body)
+    // console.log(req.body)
     const {title, description, image, user} = req.body;
     let existUser;
     try {

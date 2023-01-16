@@ -123,7 +123,7 @@ export const login = async(req, res, next)=>{
 }
 
 export const profileUpdate = async(req, res, next)=>{
-    console.log(req.body)
+    // console.log(req.body)
     try {
         const {username, email, description, address, phone, hobby, vision} = req.body;
         const userId = req.params.id;
@@ -140,6 +140,7 @@ export const profileUpdate = async(req, res, next)=>{
         console.log(error)
     }
 };
+
 export const profileImgUpdate = async(req, res, next)=>{
     // console.log(req.files)
     
@@ -167,6 +168,7 @@ export const profileImgId = async(req, res)=>{
     return res.sendFile(path.join(__dirname, `./uploads/${img}`));
 };
 
+// single user 
 export const getProfileById = async(req, res, next)=>{
     
     try {
@@ -187,7 +189,7 @@ export const getProfileById = async(req, res, next)=>{
 
 export const follow = async(req, res, next)=>{
     // console.log(req.body)
-    if (req.body.userId === req.params.id) {
+    if (req.body.userId !== req.params.id) {
       try {
         const user = await User.findById(req.params.id);
         const currentUser = await User.findById(req.body.userId);
@@ -208,8 +210,8 @@ export const follow = async(req, res, next)=>{
   
   //unfollow a user
   
-export const unFollow = async(req, res, next)=>{
-      if (req.body.userId === req.params.id) {
+export const unfollow = async(req, res, next)=>{
+      if (req.body.userId !== req.params.id) {
         try {
           const user = await User.findById(req.params.id);
           const currentUser = await User.findById(req.body.userId);
@@ -226,4 +228,24 @@ export const unFollow = async(req, res, next)=>{
       } else {
         res.status(403).json("you cant unfollow yourself");
       }
+    };
+
+    export const accountDelete = async(req, res, next)=>{
+    
+        try {
+            const userId = req.params.id;
+             await User.findByIdAndRemove(userId);
+    
+             return res.status(200).json({
+                status: "success",
+                message: "deleted user by id successfully",
+            })
+        } catch (error) {
+            return res.status(400).json({
+                status: "failed",
+                message: "not deleted user",
+                error: error.message,
+            })
+        }
+    
     };
